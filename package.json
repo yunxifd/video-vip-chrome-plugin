@@ -1,0 +1,26 @@
+{
+  "name": "video-vip-chrome-plugin",
+  "version": "1.0.0",
+  "description": "vip视频播放插件",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yunxifd/video-vip-chrome-plugin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yunxifd/video-vip-chrome-plugin/issues"
+  },
+  "homepage": "https://github.com/yunxifd/video-vip-chrome-plugin#readme",
+  "devDependencies": {
+    "@types/chrome": "0.0.77"
+  }
+}
