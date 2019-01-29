@@ -5,7 +5,7 @@ function onClickMenu(info, tab) {
 }
 
 function getProfiles() {
-    var profiles = localStorage.getItem("profiles") || "";
+    var profiles = localStorage.getItem("profiles") || "接口1$http://www.baidu.com?url=";
     var list = profiles.split('\n');
     var result = [];
     list.forEach(item => {
@@ -48,4 +48,5 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
         index = 0;
     }
     console.log(info, tab);
+    openNewTab("http://www.baidu.com?url=",linkUrl)
 })
