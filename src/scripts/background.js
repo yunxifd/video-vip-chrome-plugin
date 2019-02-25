@@ -1,27 +1,18 @@
+
+
 var contexts = ["page", "link"];
 
-function onClickMenu(info, tab) {
-    console.log(info, tab);
-}
-
 function getProfiles() {
-    var profiles = localStorage.getItem("profiles") || "接口1$http://www.baidu.com?url=";
-    var list = profiles.split('\n');
-    var result = [];
-    list.forEach(item => {
-        if (item) {
-            var tmp = item.split("$");
-            if (tmp.length === 2) {
-                result.push({
-                    name: tmp[0],
-                    url: tmp[1]
-                })
-            } else {
-                console.error("配置数据，格式错误，目前只支持 \{\name}\$\{url\}格式")
-            }
-        }
+    var list = [{
+        name: '牛巴巴',
+        url: 'http://mv.688ing.com/?uri=test#'
+    }];
+    chrome.storage.sync.get(["list"], function (result) {
+        if (result.list)
+            list = list;
     })
-    return result;
+
+    return list;
 }
 
 const profiles = getProfiles();
@@ -33,20 +24,24 @@ function openNewTab(interfaceUrl, linkUrl) {
     })
 }
 
+var menuId = chrome.contextMenus.create({
+    title: '使用vip视频解析接口播放',
+    contexts: contexts
+});
+
 profiles.forEach((p, index) => {
-    var title = p.name || "接口" + (index + 1)
+    var title = p.name;
     chrome.contextMenus.create({
-        id: title,
+        id: index.toString(),
         title: title,
+        parentId: menuId,
         contexts: contexts
     })
 })
-chrome.contextMenus.onClicked.addListener(function (info, tab) {
+
+chrome.contextMenus.onClicked.addListener(function (info) {
     var linkUrl = info.linkUrl || info.pageUrl;
-    var index = 0;
-    if (info.menuItemId == 'defaultMenu') {
-        index = 0;
-    }
-    console.log(info, tab);
-    openNewTab("http://www.baidu.com?url=",linkUrl)
+    console.log(info);
+    var interfaceUrl = profiles[Number.parseInt(info.menuItemId)].url;
+    openNewTab(interfaceUrl, linkUrl)
 })
